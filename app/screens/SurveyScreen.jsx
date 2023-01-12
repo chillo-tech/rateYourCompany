@@ -1,8 +1,9 @@
 import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import { appStyles, colors, container } from '../utils/data/styles'
 import { Controller, useForm } from 'react-hook-form';
-import { Ionicons, Entypo } from '@expo/vector-icons'; 
+import { Ionicons, Entypo } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const SurveyScreen = () => {
   const { control, handleSubmit, formState: { errors } } = useForm({
@@ -12,31 +13,33 @@ const SurveyScreen = () => {
     }
   });
   const onSubmit = data => console.log(data);
+  const navigation = useNavigation();
+
   return (
     <SafeAreaView style={appStyles.container}>
-      
-    <View
-      style={[appStyles.fieldGroup]}>
-      <Controller
-        name="name"
-        control={control}
-        style={appStyles.fieldGroup}
-        rules={{
-        required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            placeholder='Nom'
-            style={appStyles.input}
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-      />
+
+      <View
+        style={[appStyles.fieldGroup]}>
+        <Controller
+          name="name"
+          control={control}
+          style={appStyles.fieldGroup}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              placeholder='Nom'
+              style={appStyles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+        />
       </View>
       {errors.name && <Text>This is required.</Text>}
-      
+
       <View
         style={[appStyles.fieldGroup]}>
         <Controller
@@ -44,7 +47,7 @@ const SurveyScreen = () => {
           control={control}
           style={appStyles.fieldGroup}
           rules={{
-          required: true,
+            required: true,
           }}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
@@ -56,9 +59,9 @@ const SurveyScreen = () => {
             />
           )}
         />
-        </View>
-        {errors.email && <Text>This is required.</Text>}
-      
+      </View>
+      {errors.email && <Text>This is required.</Text>}
+
       <View
         style={[appStyles.fieldGroup]}>
         <Controller
@@ -66,7 +69,7 @@ const SurveyScreen = () => {
           control={control}
           style={appStyles.fieldGroup}
           rules={{
-          required: true,
+            required: true,
           }}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
@@ -78,16 +81,16 @@ const SurveyScreen = () => {
             />
           )}
         />
-        </View>
-        {errors.phone && <Text>This is required.</Text>}
-        <View
+      </View>
+      {errors.phone && <Text>This is required.</Text>}
+      <View
         style={[appStyles.fieldGroup]}>
         <Controller
           name="poste"
           control={control}
           style={appStyles.fieldGroup}
           rules={{
-          required: true,
+            required: true,
           }}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
@@ -96,28 +99,29 @@ const SurveyScreen = () => {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
+              keyboardType='number-pad'
             />
           )}
         />
-        </View>
-        {errors.name && <Text>This is required.</Text>}
-      <View style={{flexDirection: 'row', justifyContent: 'center', paddingVertical: 30}}>
+      </View>
+      {errors.name && <Text>This is required.</Text>}
+      <View style={{ flexDirection: 'row', justifyContent: 'center', paddingVertical: 30 }}>
         <Entypo name="emoji-sad" size={60} color="#F51720" />
-        <Entypo name="emoji-neutral" size={60} color="#E1C340" style={{marginHorizontal: 30}}/>
+        <Entypo name="emoji-neutral" size={60} color="#E1C340" style={{ marginHorizontal: 30 }} />
         <Entypo name="emoji-happy" size={60} color="#75E6DA" />
       </View>
       <TouchableOpacity
-            style={
-              [appStyles.defaultButton, 
-              { backgroundColor: colors.warning, color: colors.white }
-            ]}
-            onPress={() => navigation.push('Survey')}
-            activeOpacity={1}
-          >
-            <Text style={[appStyles.defaultButonText, {color: colors.white }]}>
-              Participer au vote
-            </Text>
-          </TouchableOpacity>
+        style={
+          [appStyles.defaultButton,
+          { backgroundColor: colors.warning, color: colors.white }
+          ]}
+        onPress={() => navigation.push('Survey')}
+        activeOpacity={1}
+      >
+        <Text style={[appStyles.defaultButonText, { color: colors.white }]}>
+          Participer au vote
+        </Text>
+      </TouchableOpacity>
     </SafeAreaView>
   )
 }
