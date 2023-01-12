@@ -1,30 +1,32 @@
 import { ImageBackground, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { appStyles, colors, container } from '../utils/data/styles'
+import { useAppContext } from "./../utils/data/AppContext";
 
-const HomeScreen = ({navigation}) => {
-
+const HomeScreen = ({ navigation }) => {
+  const { state } = useAppContext();
+  console.log(state);
   return (
     <ImageBackground
-        source={require("../../assets/images/home-bg.jpeg")} 
-        resizeMode="cover"
-        style={styles.image}
-      >
+      source={require("../../assets/images/home-bg.jpeg")}
+      resizeMode="cover"
+      style={styles.image}
+    >
       <SafeAreaView style={[styles.container]}>
-          <View style={styles.header}>
-            <Text style={[appStyles.logoText]}>RATE YOUR COMPANY</Text>
-          </View>
-          <View>
+        <View style={styles.header}>
+          <Text style={[appStyles.logoText]}>RATE YOUR COMPANY</Text>
+        </View>
+        <View>
 
           <TouchableOpacity
             style={
-              [appStyles.defaultButton, 
+              [appStyles.defaultButton,
               { backgroundColor: colors.warning, color: colors.white }
-            ]}
-            onPress={() => navigation.push('Survey')}
+              ]}
+            onPress={() => state.isSignIn ? navigation.push('Survey') : navigation.push('Login')}
             activeOpacity={1}
           >
-            <Text style={[appStyles.defaultButonText, {color: colors.white }]}>
+            <Text style={[appStyles.defaultButonText, { color: colors.white }]}>
               Participer au vote
             </Text>
           </TouchableOpacity>
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     justifyContent: "center",
     alignItems: 'center',
-		backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   header: {
     marginBottom: 300
